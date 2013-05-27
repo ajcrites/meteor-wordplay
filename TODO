@@ -1,6 +1,6 @@
 TODOS
-strip spaces on input box
-focus input on game start
+* strip spaces on input box
+* focus input on game start
 styling
 eliminate extra divs
 

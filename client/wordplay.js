@@ -137,7 +137,7 @@ Template.scratchpad.events({
 
       var word_id = Words.insert({player_id: Session.get('player_id'),
                                   game_id: game() && game()._id,
-                                  word: textbox.val().toUpperCase(),
+                                  word: textbox.val().trim().toUpperCase(),
                                   state: 'pending'});
       Meteor.call('score_word', word_id);
       textbox.val('');
