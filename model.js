@@ -4,6 +4,8 @@ Games = new Meteor.Collection('games');
 // { board: ['A','I',...], clock: 60,
 //   players: [{player_id, name}], winners: [player_id] }
 
+GameClocks = new Meteor.Collection('game_clocks');
+
 Words = new Meteor.Collection('words');
 // {player_id: 10, game_id: 123, word: 'hello', state: 'good', score: 4}
 
@@ -139,6 +141,10 @@ if (Meteor.isServer) {
   Meteor.publish('games', function (id) {
     check(id, String);
     return Games.find({_id: id});
+  });
+
+  Meteor.publish('game_clocks', function (game_id) {
+      return GameClocks.find({game_id: game_id});
   });
 
   // publish all my words and opponents' words that the server has

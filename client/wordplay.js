@@ -101,7 +101,12 @@ Template.board.selected = function (i) {
 };
 
 Template.board.clock = function () {
-  var clock = game() && game().clock;
+  var game_id = game() && game()._id,
+  clock = GameClocks.findOne({game_id: game_id});
+
+  if (clock) {
+      clock = clock.clock;
+  }
 
   if (!clock || clock === 0)
     return;
@@ -125,7 +130,13 @@ Template.board.events({
 //////
 
 Template.scratchpad.show = function () {
-  return game() && game().clock > 0;
+  var game_id = game() && game()._id,
+  clock = GameClocks.findOne({game_id: game_id});
+
+  if (clock) {
+      clock = clock.clock;
+  }
+  return clock > 0;
 };
 
 Template.scratchpad.events({
@@ -229,6 +240,7 @@ Meteor.startup(function () {
       var me = player();
       if (me && me.game_id) {
         Meteor.subscribe('games', me.game_id);
+        Meteor.subscribe('game_clocks', me.game_id);
         Meteor.subscribe('words', me.game_id, Session.get('player_id'));
       }
     }
