@@ -139,7 +139,11 @@ Template.scratchpad.events({
                                   game_id: game() && game()._id,
                                   word: textbox.val().trim().toUpperCase(),
                                   state: 'pending'});
-      Meteor.call('score_word', word_id);
+      Meteor.call('score_word', word_id, function (error, result) {
+          if (result !== undefined) {
+            $("#word_" + result.id).css('background-color', 'red');
+          }
+      });
       textbox.val('');
       textbox.focus();
       clear_selected_positions();

@@ -167,6 +167,10 @@ button:active {
     background-color: #0a0;
 }
 
+#scores .word.dupe {
+    display: none;
+}
+
 #scores .word.bad {
     text-decoration: line-through;
 }

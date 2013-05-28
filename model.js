@@ -97,16 +97,23 @@ paths_for_word = function (board, word) {
 Meteor.methods({
   score_word: function (word_id) {
     check(word_id, String);
-    var word = Words.findOne(word_id);
-    var game = Games.findOne(word.game_id);
+    var word = Words.findOne(word_id),
+        game = Games.findOne(word.game_id),
+        existing
+    ;
 
     // client and server can both check: must be at least three chars
     // long, not already used, and possible to make on the board.
     if (word.length < 3
-        || Words.find({game_id: word.game_id, word: word.word}).count() > 1
         || paths_for_word(game.board, word.word).length === 0) {
       Words.update(word._id, {$set: {score: 0, state: 'bad'}});
       return;
+    }
+
+    if (Words.find({game_id: word.game_id, word: word.word}).count() > 1) {
+        Words.update(word._id, {$set: {score: 0, state: 'dupe'}});
+        existing = Words.findOne({game_id: word.game_id, word: word.word});
+        return {"id": existing._id};
     }
 
     // now only on the server, check against dictionary and score it.
