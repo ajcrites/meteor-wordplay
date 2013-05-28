@@ -130,23 +130,29 @@ Template.scratchpad.show = function () {
 
 Template.scratchpad.events({
   'click button, keyup input': function (evt) {
-    var textbox = $('#scratchpad input');
+    var textbox = $('#scratchpad input'), word_id,
+        word = textbox.val().trim().toUpperCase();
     // if we clicked the button or hit enter
     if (evt.type === "click" ||
         (evt.type === "keyup" && evt.which === 13)) {
 
-      var word_id = Words.insert({player_id: Session.get('player_id'),
-                                  game_id: game() && game()._id,
-                                  word: textbox.val().trim().toUpperCase(),
-                                  state: 'pending'});
-      Meteor.call('score_word', word_id, function (error, result) {
-          if (result !== undefined) {
-            $("#word_" + result.id).css('background-color', 'red');
-          }
-      });
-      textbox.val('');
-      textbox.focus();
-      clear_selected_positions();
+      if (word.length >= 3) {
+          word_id = Words.insert({player_id: Session.get('player_id'),
+                                      game_id: game() && game()._id,
+                                      word: word,
+                                      state: 'pending'});
+          Meteor.call('score_word', word_id, function (error, result) {
+              if (result !== undefined) {
+                $("#word_" + result.id).css('background-color', 'red');
+              }
+          });
+          textbox.val('');
+          textbox.focus();
+          clear_selected_positions();
+        }
+        else {
+            textbox.focus();
+        }
     } else {
       set_selected_positions(textbox.val());
     }
