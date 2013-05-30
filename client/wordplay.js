@@ -207,6 +207,10 @@ Template.words.words = function () {
                     player_id: this._id});
 };
 
+Template.words.pending = function () {
+    return this.state == 'pending';
+}
+
 
 //////
 ////// Initialization
