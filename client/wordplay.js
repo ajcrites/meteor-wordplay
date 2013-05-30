@@ -141,11 +141,13 @@ Template.scratchpad.events({
                                       game_id: game() && game()._id,
                                       word: word,
                                       state: 'pending'});
-          Meteor.call('score_word', word_id, function (error, result) {
-              if (result !== undefined) {
-                $("#word_" + result.id).css('background-color', 'red');
-              }
-          });
+          setTimeout(function () {
+              Meteor.call('score_word', word_id, function (error, result) {
+                  if (result !== undefined) {
+                    $("#word_" + result.id).css('background-color', 'red');
+                  }
+              });
+          }, 2000);
           textbox.val('');
           textbox.focus();
           clear_selected_positions();
