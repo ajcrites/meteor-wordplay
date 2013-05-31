@@ -76,6 +76,9 @@ Template.lobby.events({
   'keyup input#myname': function (evt) {
     var name = $('#lobby input#myname').val().trim();
     Players.update(Session.get('player_id'), {$set: {name: name}});
+    if (evt.which == 13) {
+        $(".startgame").trigger('click');
+    }
   },
   'click button.startgame': function () {
     Meteor.call('start_new_game');
