@@ -182,3 +182,7 @@ button:active {
 #scores .word.bad span.score {
     background-image: 'circle-ball-dark-antialiased.gif';
 }
+
+#scores img {
+   vertical-align: middle;
+}
