@@ -125,6 +125,7 @@ Template.board.events({
     var textbox = $('#scratchpad input');
     textbox.val(textbox.val() + evt.target.innerHTML);
     textbox.focus();
+    set_selected_positions(textbox.val());
   }
 });
 
