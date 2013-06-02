@@ -1,6 +1,9 @@
 ////////// Server only logic //////////
 
 Meteor.methods({
+  restart_game: function (game_id) {
+     Games.update(game_id, {$set: {winners: []}});
+  },
   start_new_game: function () {
     // create a new game w/ fresh board
     var game_id = Games.insert({board: new_board()});

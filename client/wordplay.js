@@ -184,6 +184,12 @@ Template.postgame.events({
   }
 });
 
+Template.scores.events({
+    'click #new-game': function () {
+        Meteor.call('restart_game', game()._id);
+    }
+});
+
 //////
 ////// scores shows everyone's score and word list.
 //////
