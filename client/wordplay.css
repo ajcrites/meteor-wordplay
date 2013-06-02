@@ -131,6 +131,7 @@ button:active {
     background-color: #eeeee8;
     border: 1px solid black;
     padding: 0.5em;
+    margin-bottom: 25px;
 }
 
 #scores .player {
@@ -185,4 +186,9 @@ button:active {
 
 #scores img {
    vertical-align: middle;
+}
+
+#new-game {
+   margin: 0 auto;
+   display: block;
 }

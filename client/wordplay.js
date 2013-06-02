@@ -203,6 +203,11 @@ Template.player.winner = function () {
   return '';
 };
 
+Template.scores.playagain = function () {
+    var g = game();
+    return g && g.winners
+}
+
 Template.player.total_score = function () {
   var words = Words.find({game_id: game() && game()._id,
                           player_id: this._id});
