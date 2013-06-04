@@ -158,7 +158,12 @@ Template.scratchpad.events({
                                       state: 'pending'});
           Meteor.call('score_word', word_id, function (error, result) {
               if (result !== undefined) {
-                $("#word_" + result.id).css('background-color', 'red');
+                var bg = $("#word_" + result.id).css('background-color');
+                    $("#word_" + result.id).css('background-color', 'red');
+                setTimeout(function () {
+                    $("#word_" + result.id).css('transition', 'all 2s')
+                        .css('background-color', bg);
+                }, 10);
               }
           });
           textbox.val('');
