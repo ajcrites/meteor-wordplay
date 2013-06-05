@@ -172,6 +172,12 @@ button:active {
     display: none;
 }
 
+#scores .word.not-a-word {
+    background-color: black;
+    color: white;
+    text-decoration: line-through;
+}
+
 #scores .word.bad {
     text-decoration: line-through;
 }
