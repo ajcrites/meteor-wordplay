@@ -191,7 +191,7 @@ Template.postgame.events({
 
 Template.scores.events({
     'click #new-game': function () {
-        Meteor.call('restart_game', game()._id);
+        Meteor.call('restart_game');
     }
 });
 

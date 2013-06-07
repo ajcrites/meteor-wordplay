@@ -1,15 +1,16 @@
 ////////// Server only logic //////////
 
+var game = new Game;
+
 Meteor.methods({
   restart_game: function (game_id) {
-     Games.update(game_id, {$set: {winners: []}});
-     GameClocks.update(game_id, {$set: {clock: 120}});
+      game.restart();
   },
   start_new_game: function () {
-      var game = new Game;
-      return game.init();
+      game_id = game.init();
+      game.start();
+      return game_id;
   },
-
 
   keepalive: function (player_id) {
     check(player_id, String);

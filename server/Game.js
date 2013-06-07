@@ -4,7 +4,7 @@ Game.prototype = {
     init: function () {
         // create a new game w/ fresh board
         this.game_id = Games.insert({board: new_board()});
-        this.game_clock_id = GameClocks.insert({game_id: this.game_id, clock: 3});
+        this.game_clock_id = GameClocks.insert({game_id: this.game_id, clock: 120});
 
         // move everyone who is ready in the lobby to the game
         Players.update({game_id: null, idle: false, name: {$ne: ''}},
@@ -14,11 +14,23 @@ Game.prototype = {
         // still show them.
         var p = Players.find({game_id: this.game_id},
                              {fields: {_id: true, name: true}}).fetch();
-        Games.update({_id: this.game_id}, {$set: {players: p}});
+        Games.update(this.game_id, {$set: {players: p}});
 
+        return this.game_id;
+    },
+
+    restart: function () {
+        Games.update(this.game_id, {$set: {winners: []}});
+        GameClocks.update({game_id: this.game_id}, {$set: {clock: 120}});
+        Words.remove({game_id: this.game_id});
+        this.start();
+    },
+
+    start: function () {
         // wind down the game clock
         var clock = 3;
         var interval = Meteor.setInterval(function () {
+
           clock -= 1;
           GameClocks.update({game_id: this.game_id}, {$set: {clock: clock}});
 
@@ -42,7 +54,5 @@ Game.prototype = {
             Games.update(this.game_id, {$set: {winners: winners}});
           }
         }, 1000);
-
-        return this.game_id;
     }
 }
